@@ -70,7 +70,7 @@ exports.config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'info',
+    logLevel: 'silent',
     //
     // Set specific log levels per logger
     // loggers:
@@ -94,7 +94,7 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'https://webdriver.io',
+    baseUrl: 'https://pollev.com',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -133,8 +133,44 @@ exports.config = {
     // See the full list at http://mochajs.org/
     mochaOpts: {
         ui: 'bdd',
+        require: ['@babel/register'],
         timeout: 60000
     },
+
+    before: function() {
+        browser.addCommand('click', function (css) {
+            $(css).click()
+        })
+        browser.addCommand('getText', function (css) {
+            const eles = $$(css)
+            let arr = []
+            eles.forEach(function (ele) {
+                arr.push(ele.getText())
+            })
+            return (arr.length === 1) ? arr[0] : arr
+        })
+        browser.addCommand('setValue', function (css, value) {
+            return $(css).setValue(value)
+        })
+        browser.addCommand('isVisible', function (css) {
+            return $(css).isDisplayed()
+        })
+        browser.addCommand('isEnabled', function (css) {
+            const eles = $$(css)
+            let arr = []
+            eles.forEach(function (ele) {
+                arr.push(ele.isEnabled())
+            })
+            return (arr.length === 1) ? arr[0] : arr
+        })
+        browser.addCommand('isExisting', function (css) {
+            return $(css).isExisting()
+        })
+        browser.addCommand('selectByVisibleText', function (css, value) {
+            return $(css).selectByVisibleText(value)
+        })
+        console.log(`Test run baseUrl is: ${browser.options.baseUrl} \n`)
+    }
     //
     // =====
     // Hooks
