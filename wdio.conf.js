@@ -20,10 +20,11 @@ exports.config = {
     // directory is where your package.json resides, so `wdio` will be called from there.
     //
     specs: [
-        './test/specs/**/*.js'
+        // './test/specs/**/*.js'
+        './test/specs/**/*.spec.js'
     ],
     suites: {
-        login: ['./test/specs/basic.js']
+        polling: ['./test/specs/PollingPage.spec.js']
     },
     // Patterns to exclude.
     exclude: [
@@ -138,6 +139,8 @@ exports.config = {
     },
 
     before: function() {
+        var chai = require('chai');
+        assert = chai.assert
         browser.addCommand('click', function (css) {
             $(css).click()
         })

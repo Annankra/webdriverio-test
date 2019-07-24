@@ -10,6 +10,11 @@ export default class Page {
     isOnPage () {
         return this.getTitle() === this.title
     }
+    navigate () {
+        browser.url(this.url)
+        this.waitForPageToLoad()
+        browser.pause(2000)
+    }
     
     waitForPageToLoad (timeout) {
         timeout = timeout || 15000

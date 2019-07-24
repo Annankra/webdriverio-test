@@ -1,6 +1,5 @@
 import LoginPage from '../pagesobjects/LoginPage';
 import PollingPage from '../pagesobjects/PollingPage';
-const assert = require('assert');
 describe('Polling', () => {
     before(function() {
        LoginPage.open()
@@ -8,7 +7,7 @@ describe('Polling', () => {
     })
     describe('Take A Poll',() => {
         it('should have the right title', () => {
-            assert.strictEqual(PollingPage.getTitle(), PollingPage.title);
+            assert.equal(PollingPage.getTitle(), PollingPage.title);
         });
         describe('Options', ()=> {
             it('should be enabled', () => {
